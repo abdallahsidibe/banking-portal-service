@@ -13,12 +13,20 @@ import com.webapp.bankingportal.dto.UserResponse;
 import com.webapp.bankingportal.service.DashboardService;
 import com.webapp.bankingportal.util.LoggedinUser;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/dashboard")
 public class DashboardController {
 
     @Autowired
     private DashboardService dashboardService;
+
+    @GetMapping("/users")
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+        List<UserResponse> userResponses = dashboardService.getAllUsers();
+        return ResponseEntity.ok(userResponses);
+    }
 
     @GetMapping("/user")
     public ResponseEntity<UserResponse> getUserDetails() {
@@ -33,7 +41,10 @@ public class DashboardController {
         AccountResponse accountResponse = dashboardService.getAccountDetails(accountNumber);
         return ResponseEntity.ok(accountResponse);
     }
-    
-    
-   
+
+    @GetMapping("/search")
+    public ResponseEntity<List<UserResponse>> searchUsers(String keyword) {
+        List<UserResponse> userResponses = dashboardService.searchUsers(keyword);
+        return ResponseEntity.ok(userResponses);
+    }
 }
