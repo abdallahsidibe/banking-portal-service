@@ -25,16 +25,19 @@ import com.webapp.bankingportal.repository.TransactionRepository;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    @Autowired
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
-    @Autowired
-    private TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     private static final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
+
+    public AccountServiceImpl(AccountRepository accountRepository, TransactionRepository transactionRepository, PasswordEncoder passwordEncoder) {
+        this.accountRepository = accountRepository;
+        this.transactionRepository = transactionRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public Account createAccount(User user) {

@@ -1,6 +1,5 @@
 package com.webapp.bankingportal.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +18,11 @@ import java.util.List;
 @RequestMapping("/api/dashboard")
 public class DashboardController {
 
-    @Autowired
-    private DashboardService dashboardService;
+    private final DashboardService dashboardService;
+
+    public DashboardController(DashboardService dashboardService) {
+        this.dashboardService = dashboardService;
+    }
 
     @GetMapping("/users")
     public ResponseEntity<List<UserResponse>> getAllUsers() {

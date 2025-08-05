@@ -31,11 +31,14 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
+
+    public JwtAuthenticationFilter(UserDetailsService userDetailsService, TokenService tokenService) {
+        this.userDetailsService = userDetailsService;
+        this.tokenService = tokenService;
+    }
 
     @Override
     protected void doFilterInternal(

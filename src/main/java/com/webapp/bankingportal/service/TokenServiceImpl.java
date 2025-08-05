@@ -34,14 +34,11 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Service
 public class TokenServiceImpl implements TokenService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private TokenRepository tokenRepository;
+    private final TokenRepository tokenRepository;
 
-    @Autowired
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     private final long expiration;
     private final String secret;
@@ -50,10 +47,13 @@ public class TokenServiceImpl implements TokenService {
 
     public TokenServiceImpl(
             @Value("${jwt.secret}") String secret,
-            @Value("${jwt.expiration}") long expiration) {
+            @Value("${jwt.expiration}") long expiration, UserRepository userRepository, TokenRepository tokenRepository, AccountRepository accountRepository) {
 
         this.secret = secret;
         this.expiration = expiration;
+        this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
+        this.accountRepository = accountRepository;
     }
 
     @Override

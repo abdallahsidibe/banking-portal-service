@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,11 +25,14 @@ import com.webapp.bankingportal.util.LoggedinUser;
 @RequestMapping("/api/account")
 public class AccountController {
 
-    @Autowired
-    private AccountService accountService;
+    private final AccountService accountService;
 
-    @Autowired
-    private TransactionService transactionService;
+    private final TransactionService transactionService;
+
+    public AccountController(AccountService accountService, TransactionService transactionService) {
+        this.accountService = accountService;
+        this.transactionService = transactionService;
+    }
 
     @GetMapping("/pin/check")
     public ResponseEntity<?> checkAccountPIN() {

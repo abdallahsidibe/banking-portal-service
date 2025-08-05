@@ -26,17 +26,20 @@ public class OtpServiceImpl implements OtpService {
 
     private LocalDateTime otpLimitReachedTime = null;
 
-    @Autowired
-    private EmailService emailService;
+    private final EmailService emailService;
 
-    @Autowired
-    private OtpInfoRepository otpInfoRepository;
+    private final OtpInfoRepository otpInfoRepository;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private CacheManager cacheManager;
+    private final CacheManager cacheManager;
+
+    public OtpServiceImpl(EmailService emailService, OtpInfoRepository otpInfoRepository, UserService userService, CacheManager cacheManager) {
+        this.emailService = emailService;
+        this.otpInfoRepository = otpInfoRepository;
+        this.userService = userService;
+        this.cacheManager = cacheManager;
+    }
 
     @Override
     public String generateOTP(String accountNumber) {
