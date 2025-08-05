@@ -11,6 +11,8 @@ import com.webapp.bankingportal.exception.NotFoundException;
 import com.webapp.bankingportal.repository.AccountRepository;
 import com.webapp.bankingportal.repository.UserRepository;
 
+import java.util.List;
+
 @Service
 public class DashboardServiceImpl implements DashboardService {
 
@@ -19,6 +21,17 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Override
+    public List<UserResponse> getAllUsers() {
+        List<User> users = userRepository.findAll();
+
+        List<UserResponse> userResponses = users.stream()
+                .map(UserResponse::new)
+                .toList();
+
+        return userResponses;
+    }
 
     @Override
     public UserResponse getUserDetails(String accountNumber) {
@@ -47,4 +60,27 @@ public class DashboardServiceImpl implements DashboardService {
 
         return accountResponse;
     }
+
+    @Override
+    public List<UserResponse> searchUsers(String keyword) {
+        List<User> users = userRepository.searchUsers(keyword);
+        List<UserResponse> result = users.stream()
+//                .map(user -> {
+//                    UserResponse userResponse = new UserResponse();
+//                    userResponse.setName(user.getName());
+//                    userResponse.setEmail(user.getEmail());
+//                    userResponse.setCountryCode(user.getCountryCode());
+//                    userResponse.setPhoneNumber(user.getPhoneNumber());
+//                    userResponse.setAddress(user.getAddress());
+//                    userResponse.setAccountNumber(user.getAccount().getAccountNumber());
+//                    userResponse.setIfscCode(user.getAccount().getIfscCode());
+//                    userResponse.setBranch(user.getAccount().getBranch());
+//                    return userResponse;
+//                })
+                //.map(user -> new UserResponse(user))
+                .map(UserResponse::new)
+                .toList();
+        return result;
+    }
+
 }
